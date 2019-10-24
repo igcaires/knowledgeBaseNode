@@ -18,6 +18,9 @@ module.exports = app => {
 
     if (req.params.id) user.id = req.params.id;
 
+    if (!req.originalUrl.startsWith('/users')) user.admin = false;
+    if (!req.user || !req.user.admin) user.admin = false;
+
     try {
       existsOrError(user.name, 'Nome nao informado');
       existsOrError(user.email, 'E-mail nao informado');
